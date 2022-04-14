@@ -6,11 +6,17 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rigidbody2d;
     public float speed;
+    public GameObject gameWonPanel;
+    private bool isGameWon = false;
     // Start is called before the first frame update
    
     // Update is called once per frame
     void Update()
     {
+        if(isGameWon == true)
+        {
+            return;
+        }
         if(Input.GetAxis("Horizontal")>0)
         {
             rigidbody2d.velocity = new Vector2(speed, 0f);
@@ -39,6 +45,8 @@ public class Player : MonoBehaviour
         if(collision.tag == "Door")
         {
             Debug.Log("Level Completed !!!");
+            gameWonPanel.SetActive(true);
+            isGameWon = true;
         }
         
     }
