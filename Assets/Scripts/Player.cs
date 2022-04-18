@@ -6,51 +6,67 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rigidbody2d;
-    public float speed;
+    private float speed;
     public GameObject gameWonPanel;
     public GameObject gameLostPanel;
     private bool isGameOver = false;
-    // Start is called before the first frame update
-   
+
+
+    private string doorTag = "Door";
+    private string enemyTag = "Enemy";
+
+    float time;
+
+    private float horizontalInput, verticalInput;
+
+    private void Start()
+    {
+        speed = 1f;
+        rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+
     // Update is called once per frame
     void Update()
     {
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
         if(isGameOver == true)
         {
             return;
         }
-        if(Input.GetAxis("Horizontal")>0)
-        {
-            rigidbody2d.velocity = new Vector2(speed, 0f);
-        }
-        if(Input.GetAxis("Horizontal")<0)
-        {
-            rigidbody2d.velocity = new Vector2(-speed, 0f);
-        }
-        if(Input.GetAxis("Vertical")>0)
-        {
-            rigidbody2d.velocity = new Vector2(0f, speed);
-        }
-        if(Input.GetAxis("Vertical")<0)
-        {
-            rigidbody2d.velocity = new Vector2(0f, -speed);
-        }
-        else if(Input.GetAxis("Vertical")==0 && Input.GetAxis("Horizontal")==0)
-        {
-            rigidbody2d.velocity = new Vector2(0f, 0f);
-        }
+       
         
+        
+    }
+    void FixedUpdate()
+    {
+
+        if(horizontalInput > 0.1f || horizontalInput <0.1f)
+        {
+            rigidbody2d.AddForce(new Vector2(horizontalInput * speed, 0f), ForceMode2D.Impulse);
+        }
+        if (verticalInput > 0.1f || verticalInput < 0.1f)
+        {
+            rigidbody2d.AddForce(new Vector2(0f, verticalInput * speed), ForceMode2D.Impulse);
+        }
+
+
+        //transform.position += new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed;
+
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Door")
+        if(collision.tag == doorTag)
         {
             Debug.Log("Level Completed !!!");
             gameWonPanel.SetActive(true);
             isGameOver = true;
         }
-        if (collision.tag == "Enemy")
+        if (collision.tag == enemyTag)
         {
             Debug.Log("Level Lost !!!");
             gameLostPanel.SetActive(true);
