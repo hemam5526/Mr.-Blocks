@@ -1,27 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rigidbody2d;
-    private float speed;
+    public float speed;
     public GameObject gameWonPanel;
     public GameObject gameLostPanel;
     private bool isGameOver = false;
-
-
-    private string doorTag = "Door";
-    private string enemyTag = "Enemy";
-
-    float time;
-
+    public string doorTag = "Door";
+    public string enemyTag = "Enemy";
     private float horizontalInput, verticalInput;
 
     private void Start()
     {
-        speed = 1f;
+        speed = 0.1f;
         rigidbody2d = gameObject.GetComponent<Rigidbody2D>();
     }
 
@@ -29,15 +23,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
-        if(isGameOver == true)
+       
+        if (isGameOver == true)
         {
             return;
         }
-       
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("space bar pressed");
+            Input.ResetInputAxes();
+
+        }
+        
+
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
         
         
+
     }
     void FixedUpdate()
     {
@@ -50,11 +53,6 @@ public class Player : MonoBehaviour
         {
             rigidbody2d.AddForce(new Vector2(0f, verticalInput * speed), ForceMode2D.Impulse);
         }
-
-
-        //transform.position += new Vector3(horizontalInput, verticalInput, 0) * Time.deltaTime * speed;
-
-
 
     }
 

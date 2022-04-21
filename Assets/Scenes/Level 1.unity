@@ -1577,7 +1577,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 8
+  m_LinearDrag: 2
   m_AngularDrag: 5
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -1598,8 +1598,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2d: {fileID: 1418969159}
+  speed: 0.1
   gameWonPanel: {fileID: 1358004143}
   gameLostPanel: {fileID: 1843441624}
+  doorTag: Door
+  enemyTag: Enemy
 --- !u!1 &1650899247
 GameObject:
   m_ObjectHideFlags: 0
